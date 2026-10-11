@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="es-AR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Pizarra — Dólar en Argentina</title>
+  <meta name="description" content="Cotización del dólar blue, oficial, MEP, CCL, tarjeta y cripto en Argentina, con conversor y avisos.">
+  <meta name="theme-color" content="#1d6b45" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0e1411" media="(prefers-color-scheme: dark)">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="stylesheet" href="styles.css">
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+  <div class="wrap">
+    <header class="top">
+      <div class="brand">
+        <img src="icons/icon-192.png" alt="" width="36" height="36">
+        <div>
+          <h1>Pizarra</h1>
+          <p>Dólar en Argentina</p>
+        </div>
+      </div>
+      <div class="status">
+        <span id="estado" role="status" aria-live="polite">Cargando cotizaciones…</span>
+        <button id="actualizar" class="btn btn-ghost" type="button" title="Actualizar ahora">Actualizar</button>
+      </div>
+    </header>
+
+    <main class="grid">
+      <section class="board" aria-labelledby="t-cotizaciones">
+        <h2 id="t-cotizaciones" class="sr-only">Cotizaciones</h2>
+
+        <article class="hero" id="hero" aria-label="Dólar blue">
+          <div class="hero-main">
+            <span class="eyebrow">Dólar blue · venta</span>
+            <strong class="hero-num" id="hero-venta">—</strong>
+            <span class="hero-sub">Compra <b id="hero-compra">—</b></span>
+          </div>
+          <div class="hero-side">
+            <span class="chip" id="brecha" hidden></span>
+            <figure class="spark" id="spark" hidden>
+              <svg viewBox="0 0 240 64" preserveAspectRatio="none" aria-hidden="true"><polyline id="spark-line" fill="none" points=""/></svg>
+              <figcaption id="spark-txt"></figcaption>
+            </figure>
+          </div>
+        </article>
+
+        <div class="rows" role="table" aria-label="Todas las cotizaciones">
+          <div class="row head" role="row">
+            <span role="columnheader">Cotización</span>
+            <span role="columnheader" class="num">Compra</span>
+            <span role="columnheader" class="num">Venta</span>
+          </div>
+          <div id="filas"></div>
+        </div>
+      </section>
+
+      <aside class="side">
+        <section class="panel" aria-labelledby="t-conversor">
+          <h2 id="t-conversor">Conversor</h2>
+          <form id="conversor" class="form" autocomplete="off">
+            <label for="monto">Monto</label>
+            <input id="monto" name="monto" inputmode="decimal" placeholder="Ej.: 100.000" value="100.000">
+            <div class="two">
+              <div>
+                <label for="direccion">Convertir</label>
+                <select id="direccion" name="direccion">
+                  <option value="pesos-a-dolares">Pesos → dólares</option>
+                  <option value="dolares-a-pesos">Dólares → pesos</option>
+                </select>
+              </div>
+              <div>
+                <label for="casa-conv">Cotización</label>
+                <select id="casa-conv" name="casa"></select>
+              </div>
+            </div>
+            <output id="resultado" for="monto direccion casa-conv" class="result">—</output>
+            <p id="resultado-nota" class="note"></p>
+          </form>
+        </section>
+
+        <section class="panel" aria-labelledby="t-avisos">
+          <h2 id="t-avisos">Avisos</h2>
+          <p class="note">Te avisamos cuando una cotización cruce el valor que elijas (precio de venta).</p>
+          <form id="form-aviso" class="form" autocomplete="off">
+            <div class="three">
+              <div>
+                <label for="aviso-casa">Dólar</label>
+                <select id="aviso-casa" name="casa"></select>
+              </div>
+              <div>
+                <label for="aviso-cond">Cuando</label>
+                <select id="aviso-cond" name="condicion">
+                  <option value="mayor">sube a</option>
+                  <option value="menor">baja a</option>
+                </select>
+              </div>
+              <div>
+                <label for="aviso-valor">Valor</label>
+                <input id="aviso-valor" name="valor" inputmode="decimal" placeholder="1.600" required>
+              </div>
+            </div>
+            <button class="btn btn-primary" type="submit">Agregar aviso</button>
+            <p id="aviso-error" class="error" role="alert" hidden></p>
+          </form>
+          <ul id="lista-avisos" class="avisos"></ul>
+          <div id="permiso" class="permiso" hidden>
+            <p class="note">Para recibir los avisos, permití las notificaciones.</p>
+            <button id="btn-permiso" class="btn btn-ghost" type="button">Permitir notificaciones</button>
+          </div>
+          <p id="segundo-plano" class="note" hidden></p>
+        </section>
+      </aside>
+    </main>
+
+    <footer class="foot">
+      <p>Datos: <a href="https://dolarapi.com" target="_blank" rel="noopener">DolarApi.com</a> e
+        <a href="https://argentinadatos.com" target="_blank" rel="noopener">ArgentinaDatos</a>.
+        Los valores son informativos y pueden diferir de los de tu banco o casa de cambio. No es una recomendación de inversión.</p>
+      <p><a href="privacidad.html">Política de privacidad</a> · Pizarra 1.0</p>
+    </footer>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>

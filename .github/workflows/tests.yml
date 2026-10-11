@@ -1,0 +1,19 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm test
+      - name: Manifest and widget template are valid JSON
+        run: |
+          node -e "for (const f of ['manifest.webmanifest','widgets/cotizaciones.json','widgets/datos.json']) JSON.parse(require('fs').readFileSync(f,'utf8'))"

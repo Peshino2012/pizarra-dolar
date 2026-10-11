@@ -1,0 +1,31 @@
+## dolarapi.com
+HTTP/2 200 
+date: Sun, 11 Oct 2026 14:14:51 GMT
+content-type: application/json
+content-length: 1227
+x-content-type-options: nosniff
+report-to: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=xLoq84q%2FrLBcXvr%2FnalIFKDyISBWJvnQFgWyOzu5rJgLTaopgAeU9GgOEH1%2BEcCkoeJ8mK4Y8sg3GOaL7oxcrS8qoUQSY2PkoIbgG9eIPzy%2FR7%2F5UY%2FhOkgyIyb7yF0%3D"}]}
+nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+access-control-allow-origin: *
+cache-control: public, max-age=0, must-revalidate
+etag: "a0fc6aec2cc0bf017747800a1731d886"
+referrer-policy: strict-origin-when-cross-origin
+server: cloudflare
+cf-cache-status: DYNAMIC
+cf-ray: a48e793a7c4b7071-IAD
+alt-svc: h3=":443"; ma=86400
+
+## argentinadatos.com
+HTTP/2 200 
+date: Sun, 11 Oct 2026 14:14:51 GMT
+content-type: application/json; charset=utf-8
+access-control-allow-origin: *
+cache-control: public, max-age=60
+nel: {"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}
+vary: Accept-Encoding
+cf-cache-status: DYNAMIC
+report-to: {"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=klUwaiIuS0yaUHchEb3uY1eLOfVyxBhhFX3sSN34CBfmIGvDIxuYfnEw0hCSAddWgZvazsFZgM7T953djfZTjUaFWqB1ekEHl5TQ4VIBStvZj8BVdLrU5p9mtGmkZYJKD2DD922YaXi5"}]}
+server: cloudflare
+cf-ray: a48e793afb892869-IAD
+alt-svc: h3=":443"; ma=86400
+

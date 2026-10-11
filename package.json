@@ -1,0 +1,11 @@
+{
+  "name": "pizarra-dolar",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Pizarra: cotización del dólar en Argentina para Windows 11 (PWA)",
+  "scripts": {
+    "test": "node --test --test-reporter=spec"
+  },
+  "license": "MIT"
+}

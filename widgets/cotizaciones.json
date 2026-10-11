@@ -1,0 +1,31 @@
+{
+  "type": "AdaptiveCard",
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.5",
+  "body": [
+    {
+      "type": "ColumnSet",
+      "columns": [
+        { "type": "Column", "width": "stretch", "items": [ { "type": "TextBlock", "text": " ", "size": "Small" } ] },
+        { "type": "Column", "width": "80px", "items": [ { "type": "TextBlock", "text": "Compra", "isSubtle": true, "size": "Small", "horizontalAlignment": "Right" } ] },
+        { "type": "Column", "width": "80px", "items": [ { "type": "TextBlock", "text": "Venta", "isSubtle": true, "size": "Small", "horizontalAlignment": "Right" } ] }
+      ]
+    },
+    {
+      "type": "ColumnSet",
+      "$data": "${filas}",
+      "spacing": "Small",
+      "columns": [
+        { "type": "Column", "width": "stretch", "items": [ { "type": "TextBlock", "text": "${titulo}", "weight": "Bolder" } ] },
+        { "type": "Column", "width": "80px", "items": [ { "type": "TextBlock", "text": "${compra}", "horizontalAlignment": "Right" } ] },
+        { "type": "Column", "width": "80px", "items": [ { "type": "TextBlock", "text": "${venta}", "weight": "Bolder", "horizontalAlignment": "Right" } ] }
+      ]
+    },
+    { "type": "TextBlock", "text": "${brecha}", "isSubtle": true, "size": "Small", "wrap": true, "spacing": "Medium" },
+    { "type": "TextBlock", "text": "${actualizado}", "isSubtle": true, "size": "Small", "spacing": "None" }
+  ],
+  "actions": [
+    { "type": "Action.Execute", "title": "Actualizar", "verb": "actualizar" },
+    { "type": "Action.Execute", "title": "Abrir Pizarra", "verb": "abrir" }
+  ]
+}

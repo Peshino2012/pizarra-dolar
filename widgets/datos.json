@@ -1,0 +1,26 @@
+{
+  "filas": [
+    {
+      "titulo": "Blue",
+      "compra": "$ 1.520",
+      "venta": "$ 1.540"
+    },
+    {
+      "titulo": "Oficial",
+      "compra": "$ 1.485",
+      "venta": "$ 1.535"
+    },
+    {
+      "titulo": "MEP",
+      "compra": "$ 1.536",
+      "venta": "$ 1.543"
+    },
+    {
+      "titulo": "Tarjeta",
+      "compra": "$ 1.931",
+      "venta": "$ 1.996"
+    }
+  ],
+  "brecha": "Brecha blue/oficial: 0,3%",
+  "actualizado": "Actualizado hace 3 min"
+}
