@@ -1,0 +1,72 @@
+name: verificar-sitio
+
+# Abre la app publicada en GitHub Pages con un navegador real (Chromium), con
+# las APIs reales, y revisa lo que PWABuilder y Microsoft Store necesitan:
+# manifiesto, service worker, íconos, política de privacidad y que se vean
+# las cotizaciones. Deja una captura como artefacto.
+on:
+  workflow_dispatch:
+  workflow_run:
+    workflows: ["pages-build-deployment"]
+    types: [completed]
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    env:
+      URL: https://peshino2012.github.io/pizarra-dolar/
+    steps:
+      - name: Archivos publicados
+        run: |
+          set -e
+          for f in "" index.html manifest.webmanifest sw.js logic.js app.js styles.css privacidad.html \
+                   icons/icon-192.png icons/icon-512.png icons/maskable-512.png \
+                   widgets/cotizaciones.json widgets/datos.json store/captura-escritorio.png; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "$URL$f")
+            echo "$code  $f"
+            [ "$code" = "200" ]
+          done
+          curl -sf "${URL}manifest.webmanifest" | jq -e '.name and .start_url and (.icons | length >= 2) and .widgets' > /dev/null
+          echo "manifiesto OK"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Navegador real
+        run: |
+          npm i --no-save playwright@1 >/dev/null
+          npx playwright install --with-deps chromium >/dev/null
+          cat > prueba.mjs <<'JS'
+          import { chromium } from 'playwright';
+          const b = await chromium.launch();
+          const p = await b.newPage({ viewport: { width: 1366, height: 768 }, locale: 'es-AR' });
+          const errores = [];
+          p.on('pageerror', (e) => errores.push(String(e)));
+          p.on('console', (m) => { if (m.type() === 'error') errores.push(m.text()); });
+          await p.goto(process.env.URL);
+          await p.waitForSelector('#filas .row', { timeout: 20000 });
+          await p.waitForFunction(() => navigator.serviceWorker.controller !== null, null, { timeout: 20000 }).catch(() => {});
+          const r = await p.evaluate(async () => ({
+            blue: document.getElementById('hero-venta').textContent,
+            filas: document.querySelectorAll('#filas .row').length,
+            estado: document.getElementById('estado').textContent,
+            serie: !document.getElementById('spark').hidden,
+            sw: !!(await navigator.serviceWorker.getRegistration()),
+            controlado: !!navigator.serviceWorker.controller,
+          }));
+          await p.screenshot({ path: 'captura-real.png' });
+          // Sin conexión: recargar con la red cortada debe seguir mostrando la pizarra.
+          await p.context().setOffline(true);
+          await p.reload();
+          await p.waitForSelector('#filas .row', { timeout: 10000 });
+          r.offline = await p.textContent('#estado');
+          r.errores = errores.filter((e) => !/ERR_INTERNET_DISCONNECTED|Failed to fetch/.test(e));
+          console.log(JSON.stringify(r, null, 2));
+          await b.close();
+          if (!r.sw || r.filas < 5 || r.blue === '—' || r.errores.length) process.exit(1);
+          JS
+          node prueba.mjs | tee -a "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: captura-real
+          path: captura-real.png
