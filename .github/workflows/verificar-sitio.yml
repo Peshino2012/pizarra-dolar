@@ -45,6 +45,8 @@ jobs:
           await p.goto(process.env.URL);
           await p.waitForSelector('#filas .row', { timeout: 20000 });
           await p.waitForFunction(() => navigator.serviceWorker.controller !== null, null, { timeout: 20000 }).catch(() => {});
+          // El histórico llega después que las cotizaciones.
+          await p.waitForSelector('#spark:not([hidden])', { timeout: 20000 }).catch(() => {});
           const r = await p.evaluate(async () => ({
             blue: document.getElementById('hero-venta').textContent,
             filas: document.querySelectorAll('#filas .row').length,
@@ -54,16 +56,20 @@ jobs:
             controlado: !!navigator.serviceWorker.controller,
           }));
           await p.screenshot({ path: 'captura-real.png' });
+          r.errores = [...errores];
+          errores.length = 0;
           // Sin conexión: recargar con la red cortada debe seguir mostrando la pizarra.
           await p.context().setOffline(true);
           await p.reload();
           await p.waitForSelector('#filas .row', { timeout: 10000 });
           r.offline = await p.textContent('#estado');
-          r.errores = errores.filter((e) => !/ERR_INTERNET_DISCONNECTED|Failed to fetch/.test(e));
+          // Sin red, los pedidos a las APIs fallan a propósito: lo que importa es que la pizarra se vea.
+          r.erroresSinConexion = errores.length;
           console.log(JSON.stringify(r, null, 2));
           await b.close();
-          if (!r.sw || r.filas < 5 || r.blue === '—' || r.errores.length) process.exit(1);
+          if (!r.sw || r.filas < 5 || r.blue === '—' || !r.serie || r.errores.length || !/Sin conexión/.test(r.offline)) process.exit(1);
           JS
+          set -o pipefail
           node prueba.mjs | tee -a "$GITHUB_STEP_SUMMARY"
       - uses: actions/upload-artifact@v4
         if: always()
