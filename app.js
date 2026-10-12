@@ -255,6 +255,9 @@ async function activarSegundoPlano() {
 
 // --- Eventos ----------------------------------------------------------------
 function iniciar() {
+  // El botón de la Store solo tiene sentido en el navegador, no dentro de la app instalada.
+  const instalada = window.matchMedia('(display-mode: standalone)').matches || window.matchMedia('(display-mode: window-controls-overlay)').matches;
+  $('link-store').hidden = instalada;
   opcionesCasas($('casa-conv'), 'blue');
   opcionesCasas($('aviso-casa'), 'blue');
   renderPizarra();

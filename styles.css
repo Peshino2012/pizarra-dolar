@@ -55,6 +55,9 @@ a { color: var(--accent); }
 .brand img { border-radius: 9px; }
 .brand h1 { font-size: 22px; font-weight: 700; }
 .brand p { color: var(--muted); font-size: 13px; }
+.store-link { display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 6px; background: var(--ink); color: var(--ground); font-weight: 600; font-size: 14px; text-decoration: none; margin-left: auto; }
+.store-link:hover { filter: brightness(1.15); }
+.store-link[hidden] { display: none; }
 .status { display: flex; align-items: center; gap: 12px; color: var(--muted); font-size: 13px; }
 .status .offline { color: var(--warn); font-weight: 600; }
 

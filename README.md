@@ -1,5 +1,7 @@
 # Pizarra — Dólar en Argentina
 
+**[Descargar en Microsoft Store](https://apps.microsoft.com/detail/9mx0hpkjtclz)** · [Usar en el navegador](https://peshino2012.github.io/pizarra-dolar/)
+
 App web instalable (PWA) para Windows 11 con todas las cotizaciones del dólar
 en Argentina, conversor, avisos con notificaciones y widget para el panel de
 widgets. Pensada para publicarse en Microsoft Store empaquetada con PWABuilder.

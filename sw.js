@@ -2,7 +2,7 @@
 // segundo plano y alimenta el widget del panel de widgets de Windows 11.
 import { API_DOLARES, normalizar, evaluarAlertas, textoAlerta, datosWidget } from './logic.js';
 
-const VERSION = 'pizarra-v1';
+const VERSION = 'pizarra-v2';
 const CACHE_APP = `${VERSION}-app`;
 const CACHE_DATOS = 'pizarra-datos';
 const CACHE_CONFIG = 'pizarra-config';
